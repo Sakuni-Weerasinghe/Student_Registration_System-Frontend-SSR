@@ -2,18 +2,22 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl,Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  providers: [AuthService]
 })
 export class LoginComponent {
   loginForm! : FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService){}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -24,9 +28,18 @@ export class LoginComponent {
     })
   }
 
-  onSubmit() {
+  onLogin() {
     if(this.loginForm.valid){
       console.log(this.loginForm.value)
+      this.auth.login(this.loginForm.value)
+      .subscribe({
+        next:(res)=>{
+          alert(res.message)
+        },
+        error:(err)=>{
+          alert(err?.error.message)
+        }
+      })
       //send to database
     }else{
       //throw error
