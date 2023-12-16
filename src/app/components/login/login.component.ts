@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl,Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService){}
+    private auth: AuthService,
+    private router: Router){}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -35,6 +37,8 @@ export class LoginComponent {
       .subscribe({
         next:(res)=>{
           alert(res.message)
+          this.loginForm.reset();
+          this.router.navigate(['dashboard']);
         },
         error:(err)=>{
           alert(err?.error.message)
