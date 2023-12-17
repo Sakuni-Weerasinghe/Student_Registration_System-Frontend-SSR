@@ -1,10 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../../models/studet.model';
 import { ApiServiceService } from '../../services/api.service.service';
-import { Router } from '@angular/router';
 import { NgToastService , NgToastModule} from 'ng-angular-popup';
 
 @Component({
@@ -18,7 +16,6 @@ import { NgToastService , NgToastModule} from 'ng-angular-popup';
 export class StudentRegistrationComponent {
   @ViewChild('form')
   form!: NgForm;
-
 
   studentRegisterRequest: Student = {
     studentId: 0,
