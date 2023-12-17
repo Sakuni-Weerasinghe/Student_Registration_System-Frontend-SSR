@@ -6,14 +6,15 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { NgToastModule } from 'ng-angular-popup';
 import { NgToastService } from 'ng-angular-popup';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,NgToastModule],
+  imports: [CommonModule,ReactiveFormsModule,NgToastModule,HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [AuthService]
+  providers: [AuthService, HttpClient]
 })
 export class LoginComponent {
   loginForm! : FormGroup;
