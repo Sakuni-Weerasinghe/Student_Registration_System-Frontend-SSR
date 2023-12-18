@@ -3,8 +3,7 @@ import { Student } from '../../models/studet.model';
 import { ApiServiceService } from '../../services/api.service.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { error } from 'console';
-import { response } from 'express';
+
 
 @Component({
   selector: 'app-student-enrollment',
