@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { NgToastModule } from 'ng-angular-popup';
 import { NgToastService } from 'ng-angular-popup';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StateService } from '../../services/state.service';
 
 @Component({
   selector: 'app-login',
@@ -28,14 +29,15 @@ export class LoginComponent {
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private stateService: StateService
   ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    const token = localStorage.getItem('token');
-    if (token) this.router.navigate(['dashboard']);
+    const loginStatus$ = this.stateService.loginStatus$;
+    if (loginStatus$) this.router.navigate(['dashboard']);
 
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -55,6 +57,7 @@ export class LoginComponent {
             summary: res.message,
             duration: 3000,
           });
+          this.stateService.setLoginStatus(true);
           this.router.navigate(['dashboard']);
         },
         error: (err) => {

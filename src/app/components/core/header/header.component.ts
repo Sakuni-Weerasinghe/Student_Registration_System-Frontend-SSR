@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { StateService } from '../../../services/state.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-header',
@@ -7,25 +9,28 @@ import { Router, RouterModule } from '@angular/router';
   imports: [RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
+  providers: [StateService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isLogin: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private stateService: StateService) {}
 
   loginHandler() {
     if (this.isLogin) {
+      console.log('bbbbbbbbbbbbbbbbbbb');
+      this.stateService.setLoginStatus(false);
       this.router.navigate(['']);
       localStorage.clear();
     } else {
+      console.log('aaaaaaaaaaaaaa');
       this.router.navigate(['/login']);
     }
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    const tokenString = localStorage.getItem('token');
-    this.isLogin = tokenString ? true : false;
+    this.stateService.loginStatus$.subscribe((value) => {
+      this.isLogin = value;
+    });
   }
 }
