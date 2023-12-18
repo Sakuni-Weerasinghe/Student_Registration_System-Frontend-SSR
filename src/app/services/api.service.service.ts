@@ -18,6 +18,10 @@ export class ApiServiceService {
     return this.http.post<Student>(this.baseUrl + 'Student/register-student', registerStudentRequest);
   }
 
+  getAllStudents(): Observable<Student[]>{
+    return this.http.get<Student[]>(this.baseUrl + 'Student')
+  }
+
   addCourse(courseRegisterRequest : Course): Observable<Course>{
     return this.http.post<Course>(this.baseUrl + 'Course/add-course', courseRegisterRequest);
   }

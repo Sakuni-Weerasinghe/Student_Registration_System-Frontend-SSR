@@ -19,15 +19,15 @@ export class StudentRegistrationComponent {
 
   studentRegisterRequest: Student = {
     studentId: 0,
-    firstname: " ",
-    lastname: " ",
+    firstName: " ",
+    lastName: " ",
     birthday: new Date(),
     gender: " ",
     email: " ",
-    phone: " ",
-    addressline1: " ",
-    addressline2: " ",
-    addressline3: " "
+    phones: " ",
+    addressLine1: " ",
+    addressLine2: " ",
+    addressLine3: " "
   };
 
   constructor(
