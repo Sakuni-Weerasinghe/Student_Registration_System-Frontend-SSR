@@ -1,1 +1,36 @@
-<p>student-course-details works!</p>
+<div class="container my-5">
+    <h4 class="text-left pb-4"><strong>Welcome Sakuni's Course Enrollment</strong></h4>
+    <div class="mb-5">
+        <div>
+            <h5>Courses</h5>
+            <mat-form-field>
+                <mat-label>Select the Courses</mat-label>
+                <mat-select [formControl]="courses_" multiple [(ngModel)]="selectedValue">
+                  @for (course of courses; track course) 
+                  {
+                    <mat-option [value]="course.courseCode">{{course.courseCode}} {{course.courseName}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              
+        </div>
+        <table class="table">
+            <thead>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Lecturer</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- <td>{{selectedValue.courseCode}}</td>
+                    <td>{{selectedValue.courseName}}</td>
+                    <td>{{selectedValue.lecturer}}</td> -->
+                </tr>
+            </tbody>
+        </table>
+        <p>{{selectedValue}}</p>
+        
+    </div>
+    
+</div>
+

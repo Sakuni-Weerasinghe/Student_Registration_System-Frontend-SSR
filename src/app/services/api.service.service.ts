@@ -26,8 +26,14 @@ export class ApiServiceService {
     return this.http.get<Student>(this.baseUrl + 'Student/' + id)
   }
 
+
+  
   addCourse(courseRegisterRequest : Course): Observable<Course>{
     return this.http.post<Course>(this.baseUrl + 'Course/add-course', courseRegisterRequest);
+  }
+
+  getAllCourses(): Observable<Course[]>{
+    return this.http.get<Course[]>(this.baseUrl + 'Course')
   }
 
 }
