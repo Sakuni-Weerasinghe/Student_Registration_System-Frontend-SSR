@@ -6,11 +6,11 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Course } from '../../models/course.model';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-student-course-details',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule,CommonModule],
   templateUrl: './student-course-details.component.html',
   styleUrl: './student-course-details.component.css',
   providers: [ApiServiceService]
@@ -18,8 +18,11 @@ import { Course } from '../../models/course.model';
 export class StudentCourseDetailsComponent {
   courses_ = new FormControl('');
 
-  selectedValue: Course[] = [];
+  selectedCourses: Course[] = [];
   courses: Course[] = [];
+
+  courseList: Course[] = []
+  initialCourseList : Course[] = []
 
   studentDetails: Student = {
     studentId: 0,
@@ -38,6 +41,22 @@ export class StudentCourseDetailsComponent {
     private route: ActivatedRoute,
     private apiService: ApiServiceService,
     ) {}
+
+  saveCourses(){
+    console.log('Selected Courses:', this.selectedCourses);
+    this.courseList = this.selectedCourses;
+  }  
+
+  onCheckboxChange(course: any): void {
+    if (course.selected) {
+      this.selectedCourses.push(course);
+    } else {
+      const index = this.selectedCourses.findIndex(selectedCourse => selectedCourse.courseCode === course.courseCode);
+      if (index !== -1) {
+        this.selectedCourses.splice(index, 1);
+      }
+    }
+  }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -59,12 +78,13 @@ export class StudentCourseDetailsComponent {
 
     this.apiService.getAllCourses()
     .subscribe({
-      next: (courses) => {
+      next: (response) => {
         //console.log(students);
-        this.courses = courses;
+        this.initialCourseList = response;
+        this.courseList = this.initialCourseList;
       },
-      error: (response) => {
-        console.log(response);
+      error: (error) => {
+        console.log(error);
       }
     });
     
